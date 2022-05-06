@@ -21,6 +21,12 @@ list(APPEND INC_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../eigen")
 #  list(APPEND INC_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../SuiteSparse-5.12.0/AMD/Include")
 #  list(APPEND INC_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../SuiteSparse-5.12.0/SuiteSparse_config")
  list(APPEND INC_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../superlu/SRC")
+#  list(APPEND INC_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../arpackpp/include")
+#  list(APPEND INC_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../arpackpp/examples/matrices/nonsym")
+ list(APPEND INC_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/inc/arpackpp-for-eigen/include")
+ list(APPEND INC_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/inc/arpackpp-for-eigen/examples/matrices/nonsym")
+
+
 
 
 #message (STATUS "${INC_DIRS}")
