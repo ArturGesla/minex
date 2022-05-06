@@ -2,17 +2,17 @@
 
 #include <Eigen/Dense>
 #include <Eigen/Sparse>
-#include <Eigen/UmfPackSupport>
+//#include <Eigen/UmfPackSupport>
 
 void mysolve(Eigen::VectorXd &u, Eigen::SparseMatrix<double> &AA, Eigen::VectorXd &rhs)
 {
-    Eigen::UmfPackLU<Eigen::SparseMatrix<double>> solve(AA);
-    rhs=-1.0*rhs;
-    Eigen::VectorXd p = solve.solve(rhs);
-	solve.printUmfpackInfo();
-    u=p;
+    // Eigen::UmfPackLU<Eigen::SparseMatrix<double>> solve(AA);
+    // rhs=-1.0*rhs;
+    // Eigen::VectorXd p = solve.solve(rhs);
+	// solve.printUmfpackInfo();
+    // u=p;
 
-      umfpack_di_report_info(0, 0);
+    //   umfpack_di_report_info(0, 0);
 
 }
 
