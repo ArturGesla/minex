@@ -17,50 +17,52 @@
 #ifndef LNMATRXF_H
 #define LNMATRXF_H
 
-
-template<class ARFLOAT, class ARINT>
-void NonSymMatrixF(ARINT n, ARINT& nnz, ARFLOAT* &A, ARINT* &irow, 
-                   ARINT* &pcol,Eigen::SparseMatrix<double> &BB)
+template <class ARFLOAT, class ARINT>
+void NonSymMatrixF(ARINT n, ARINT &nnz, ARFLOAT *&A, ARINT *&irow,
+                   ARINT *&pcol, Eigen::SparseMatrix<double> &BB)
 {
 
-  ARINT   i,j;
+  ARINT i, j;
   ARFLOAT diag, sub;
 
   // Defining constants.
 
-  sub  = 1.0;
+  sub = 1.0;
   diag = 4.0;
 
   // Defining the number of nonzero matrix elements.
 
-  nnz = 3*n-2;
+  //nnz = 3*n-2;
 
+  nnz = 3 * n - 2;
+  
   // Creating output vectors.
 
-  A    = new ARFLOAT[nnz];
+  A = new ARFLOAT[nnz];
   irow = new ARINT[nnz];
-  pcol = new ARINT[n+1];
+  pcol = new ARINT[n + 1];
 
   // Filling A, irow and pcol.
 
   pcol[0] = 0;
   j = 0;
-  for (i=0; i!=n; i++) {
-    if (i != 0) {
-      irow[j] = i-1;
-      A[j++]  = sub;
+  for (i = 0; i != n; i++)
+  {
+    if (i != 0)
+    {
+      irow[j] = i - 1;
+      A[j++] = sub;
     }
     irow[j] = i;
-    A[j++]  = diag;
-    if (i != (n-1)) {
-      irow[j] = i+1;
-      A[j++]  = sub;
+    A[j++] = diag;
+    if (i != (n - 1))
+    {
+      irow[j] = i + 1;
+      A[j++] = sub;
     }
-    pcol[i+1] = j;
+    pcol[i + 1] = j;
   }
 
 } // NonSymMatrixF.
 
-
 #endif // LNMATRXF_H
-

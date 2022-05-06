@@ -34,7 +34,8 @@ void NonSymMatrixE(ARINT n, ARINT& nnz, ARFLOAT* &A, ARINT* &irow,
 
   // Defining the number of nonzero matrix elements.
 
-  nnz = 3*n-2;
+  //nnz = 3*n-2;
+  nnz = AA.nonZeros();
 
   // Creating output vectors.
 
@@ -44,21 +45,49 @@ void NonSymMatrixE(ARINT n, ARINT& nnz, ARFLOAT* &A, ARINT* &irow,
 
   // Filling A, irow and pcol.
 
-  pcol[0] = 0;
-  j = 0;
-  for (i=0; i!=n; i++) {
-    if (i != 0) {
-      irow[j] = i-1;
-      A[j++]  = three;
+  // pcol[0] = 0;
+  // j = 0;
+  // for (i=0; i!=n; i++) {
+  //   if (i != 0) {
+  //     irow[j] = i-1;
+  //     A[j++]  = three;
+  //   }
+  //   irow[j] = i;
+  //   A[j++]  = two;
+  //   if (i != (n-1)) {
+  //     irow[j] = i+1;
+  //     A[j++]  = -two;
+  //   }
+  //   pcol[i+1] = j;
+  // }
+
+  for (int i=0; i<nnz; i++)
+    {
+      irow[i]=*(AA.innerIndexPtr()+i );
+    //std::cout << *(AA.innerIndexPtr()+i )<< std::endl;
+
     }
-    irow[j] = i;
-    A[j++]  = two;
-    if (i != (n-1)) {
-      irow[j] = i+1;
-      A[j++]  = -two;
+
+int jj=0;
+    for (int i=0; i<nnz; i++)
+    {
+      if (i==*(AA.outerIndexPtr()+jj+1)) jj++;
+      int ii=*(AA.innerIndexPtr()+i );
+      A[i]=AA.coeff(ii,jj);
+    //std::cout << *(AA.innerIndexPtr()+i )<< std::endl;
+
     }
-    pcol[i+1] = j;
-  }
+
+
+    
+
+
+    for (int i=0; i<n+1; i++)
+    {
+      pcol[i]=*(AA.outerIndexPtr()+i );
+    //std::cout << *(AA.outerIndexPtr()+i )<< std::endl;
+
+    }
 
 } // NonSymMatrixE.
 
