@@ -20,9 +20,44 @@ void mysolve(Eigen::VectorXd &u, Eigen::SparseMatrix<double> &AA, Eigen::VectorX
 
     //   umfpack_di_report_info(0, 0);
 }
-void findev(Eigen::SparseMatrix<double> &AA, Eigen::SparseMatrix<double> &BB)
+void findev(Eigen::SparseMatrix<double> &AA, Eigen::SparseMatrix<double> &BB, int nev, double realSig, double imagSig)
 {
+//Defining variables;
+
+    int n;               // Dimension of the problem.
+    int nnza, nnzb;      // Number of nonzero elements in A and B.
+    int *irowa, *irowb;  // pointers to arrays that store the row
+                         // indices of the nonzeros in A and B.
+    int *pcola, *pcolb;  // pointers to arrays of pointers to the
+                         // beginning of each column of A and B in
+                         // valA and valB.
+    double *valA, *valB; // pointers to arrays that store the
+                         // nonzero elements of A and B.
+
+    // Creating matrices A and B.
+
+    //n = 10;
+    n = AA.rows();
+    NonSymMatrixE(n, nnza, valA, irowa, pcola, AA);
+    ARluNonSymMatrix<double, double> A(n, nnza, valA, irowa, pcola);
+
+     NonSymMatrixE(n, nnzb, valB, irowb, pcolb, BB);
+     ARluNonSymMatrix<double, double> B(n, nnzb, valB, irowb, pcolb);
+
+    // // Defining what we need: the four eigenvectors nearest to 0.4 + 0.6i.
+
+     ARluNonSymGenEig<double> dprob(long(nev), A, B, 'R', realSig, imagSig);
+
+    // // Finding eigenvalues and eigenvectors.
+
+     dprob.FindEigenvectors();
+
+    // // Printing solution.
+
+     Solution(A, B, dprob);
+
 }
+
 
 int main()
 {
@@ -66,6 +101,7 @@ BB.insert(9,9)=4;
 std::cout<<BB<<std::endl;
 
 
+findev(AA,BB,4,0.4,0.0);
 
     // Eigen::SparseLU<Eigen::SparseMatrix<double>> solve(AA);
 
