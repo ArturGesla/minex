@@ -37,6 +37,8 @@ void NonSymMatrixE(ARINT n, ARINT& nnz, ARFLOAT* &A, ARINT* &irow,
   //nnz = 3*n-2;
   nnz = AA.nonZeros();
 
+if (AA.isCompressed()==false) AA.makeCompressed();
+
   // Creating output vectors.
 
   A    = new ARFLOAT[nnz];

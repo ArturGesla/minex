@@ -29,27 +29,43 @@ int main()
     Eigen::VectorXd b(2);
     b << 1, 2;
 
-    Eigen::SparseMatrix<double> AA(3, 3);
+    Eigen::SparseMatrix<double> AA(10, 10);
 
-    AA.insert(0, 0) = 2;
-    AA.insert(1, 0) = -2;
-AA.insert(0, 1) = 3;
-AA.insert(1, 1) = 2;
-AA.insert(2, 1) = -2;
-AA.insert(1, 2) = 3;
-AA.insert(2, 2) = 2;
+//    AA.insert(0, 0) = 2;
+//    AA.insert(1, 0) = -2;
+//AA.insert(0, 1) = 3;
+//AA.insert(1, 1) = 2;
+//AA.insert(2, 1) = -2;
+//AA.insert(1, 2) = 3;
+//AA.insert(2, 2) = 2;
+for (int i=0; i<10-1; i++)
+{
+AA.insert(i,i)=2;
+AA.insert(i,i+1)=3;
+AA.insert(i+1,i)=-2;
+}
+AA.insert(9,9)=2;
 
 std::cout<<AA<<std::endl;
 
-    Eigen::SparseMatrix<double> BB(2, 2);
+    Eigen::SparseMatrix<double> BB(10, 10);
 
-    BB.insert(0, 0) = 1;
-    BB.insert(1, 1) = 1;
+//    BB.insert(0, 0) = 1;
+  //  BB.insert(1, 1) = 1;
 
+for (int i=0; i<9; i++)
+{
+BB.insert(i,i)=4;
+BB.insert(i,i+1)=1;
+BB.insert(i+1,i)=1;
+}
+BB.insert(9,9)=4;
     Eigen::VectorXd x(2);
-    mysolve(x, AA, b);
+   // mysolve(x, AA, b);
 
-    AA.makeCompressed();
+std::cout<<BB<<std::endl;
+
+
 
     // Eigen::SparseLU<Eigen::SparseMatrix<double>> solve(AA);
 
@@ -85,22 +101,22 @@ std::cout<<AA<<std::endl;
     NonSymMatrixE(n, nnza, valA, irowa, pcola, AA);
     ARluNonSymMatrix<double, double> A(n, nnza, valA, irowa, pcola);
 
-    
+std::cout<<"comp"<<AA.isCompressed()<<std::endl;
 
-    // NonSymMatrixF(n, nnzb, valB, irowb, pcolb, BB);
-    // ARluNonSymMatrix<double, double> B(n, nnzb, valB, irowb, pcolb);
+     NonSymMatrixE(n, nnzb, valB, irowb, pcolb, BB);
+     ARluNonSymMatrix<double, double> B(n, nnzb, valB, irowb, pcolb);
 
     // // Defining what we need: the four eigenvectors nearest to 0.4 + 0.6i.
 
-    // ARluNonSymGenEig<double> dprob(2L, A, B, 'R', 0.4, 0.0);
+     ARluNonSymGenEig<double> dprob(2L, A, B, 'R', 0.4, 0.0);
 
     // // Finding eigenvalues and eigenvectors.
 
-    // dprob.FindEigenvectors();
+     dprob.FindEigenvectors();
 
     // // Printing solution.
 
-    // Solution(A, B, dprob);
+     Solution(A, B, dprob);
 
     return 0;
 }
